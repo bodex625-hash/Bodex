@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>رابط حصري</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 70%;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>أدخل كلمة المرور للوصول للرابط</h2>
+  <form id="accessForm">
+    <input type="password" id="password" placeholder="كلمة المرور" required>
+    <br>
+    <button type="submit">ادخل</button>
+  </form>
+</div>
+
+<!-- مكتبة CryptoJS لتشفير وفك التشفير -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script>
+  const key = CryptoJS.enc.Utf8.parse("BodexSuperKey123"); // مفتاح سري للتشفير
+
+  // كلمة المرور مشفرة (Bodex55510200)
+  const encryptedPass = "U2FsdGVkX19bFWhZK4+8x1Gk/5aHsoRQGeVsYrUxqT8=";
+
+  // الرابط الأصلي مشفر
+  const encryptedURL = "U2FsdGVkX1+o1iWvJzpiHqZ0xqWk4U9yc+q6JMz1qXg=";
+
+  document.getElementById('accessForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const input = document.getElementById('password').value;
+
+    // فك تشفير كلمة المرور
+    const decryptedPass = CryptoJS.AES.decrypt(encryptedPass, key).toString(CryptoJS.enc.Utf8);
+
+    if(input === decryptedPass){
+      // فك تشفير الرابط وإعادة التوجيه
+      const decryptedURL = CryptoJS.AES.decrypt(encryptedURL, key).toString(CryptoJS.enc.Utf8);
+      window.location.href = decryptedURL;
+    } else {
+      alert("كلمة المرور خاطئة!");
+    }
+  });
+</script>
+
+</body>
+</html>
